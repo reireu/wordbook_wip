@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wordbook</title>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+</head>
+<body>
+    <!-- 新しい単語追加フォーム -->
+    <div class="form-container">
+        <form id="addWordForm">
+            <input type="text" id="newWord" placeholder="表の文章（単語）">
+            <input type="text" id="newDefinition" placeholder="裏の文章（定義）">
+            <button type="submit" class="c-btn slip">単語帳に追加</button>
+        </form>
+    </div>
+
+    <div class="wordbook-area" id="wordbook-area">
+        <!-- DBから取得した単語の表示 -->
+        <p id="definition">{{ word.word_registered }}</p>
+    </div>
+
+    <script>
+        // 単語帳エリアがクリックされたときに実行される関数
+        function toggleDefinition() {
+            // 現在の単語と定義を取得
+            var wordElement = document.getElementById("word_registered").textContent;
+            var definitionElement = document.getElementById("definition").textContent;
+
+            // 単語と定義を交換
+            document.getElementById("word_registered").textContent = definitionElement;
+            document.getElementById("definition").textContent = wordElement;
+        }
+
+        // 単語帳エリアにクリックイベントリスナーを追加
+        document.getElementById("wordbook-area").addEventListener("click", toggleDefinition);
+
+        async function addWord(event) {
+            event.preventDefault();
+            const word = document.getElementById("newWord").value;
+            const definition = document.getElementById("newDefinition").value;
+            const response = await fetch(`/words/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ word: word, definition: definition })
+            });
+            const data = await response.json();
+            alert(data.word + " added successfully!");
+            // 単語帳への追加完了画面
+
+            // 完了画面のあと、フォームを初期化
+            document.getElementById("newWord").value = "";
+            document.getElementById("newDefinition").value = "";
+        }
+
+        // フォームに関数をバインド
+        document.getElementById("addWordForm").addEventListener("submit", addWord);
+    </script>
+</body>
+</html>
+

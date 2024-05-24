@@ -1,0 +1,98 @@
+/* 共通のスタイル */
+body {
+    font-family: Arial, sans-serif;
+}
+
+.form-container {
+    margin-bottom: 60px;
+    display: flex;
+    justify-content: space-between; /* 横並び */
+}
+
+.form-container input {
+    margin-bottom: 10px;
+}
+
+.form-container input[type="text"] {
+    margin-bottom: 30px;
+}
+
+/* PCサイズ以上のスタイル */
+@media screen and (min-width: 431px) {
+    #newWord, #newDefinition {
+        width: calc(50% - 30px);
+        height: 200px;
+        font-size: calc(0.8rem + 0.4 * (100vw - 20em) / 55);
+    }
+}
+
+/* スマホサイズ用のスタイル*/
+@media screen and (max-width: 430px) {
+    .form-container {
+        flex-direction: column; /* 縦並び */
+    }
+
+    #newWord, #newDefinition {
+        width: calc(100% - 30px);
+        height: 100px;
+    }
+}
+
+/* 単語帳に追加するボタンのスタイル */
+.c-btn.slip {
+    background: transparent;
+    border: none;
+    position: relative;
+    border-radius: 0;
+    z-index: 1;
+}
+
+.c-btn.slip::before,
+.c-btn.slip::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: auto;
+    transition: .2s cubic-bezier(0.45, 0, 0.55, 1);
+}
+
+.c-btn.slip::before {
+    background: #098cff;
+    border: 2px solid #09c1ff;
+    z-index: -1;
+}
+
+.c-btn.slip::after {
+    background: #fff6dc;
+    z-index: -2;
+}
+
+.c-btn.slip:hover {
+    color: #71b0eb;
+}
+
+.c-btn.slip:hover::before {
+    background: transparent;
+}
+
+.c-btn.slip:hover::after {
+    top: 6px;
+    left: 6px;
+}
+
+.wordbook-area {
+    margin-bottom: 120px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    top: calc(50% + 200px);
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+    border-color: black;
+    border-width: 10px;
+}
